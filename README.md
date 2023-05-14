@@ -34,3 +34,8 @@ And the most important point is that now that I can confidently say I understand
 ## Credits
 * https://www.youtube.com/watch?v=tIeHLnjs5U8&ab_channel=3Blue1Brown
 * All of my mathematics teachers so far who have kept up with me and taught me calculus and linear algebra 😇
+
+## Fixes (14/05/23)
+The idea of the significantly poor performance of the custom model has bothered me to I decided to take a look at what the problem could be. After manually observing the changes in weights and biases and the changes in it, I have stumbled upon several findings. 
+1) The initial set up of weights and biases is crucial. Certain set up such as a normal distribution within the ranges of -4 and 4 gave a result that is significantly better than when using `torch.randn`.
+2) The problem of exploding gradients was severe as well. Just after the first epoch, the weights and biases figures were off the chart and reaching six figures. This is where I realized the importance of gradient clipping and normalization. As you can see in the code, I have experimented with several different values of clipping and I found out for this specific problem, values around the magnitude of 0.5 and 2 were the most optimal. However, the alternative method of gradient normalization was not as effective as I thought it would be. 
